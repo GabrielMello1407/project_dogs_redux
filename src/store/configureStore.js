@@ -1,13 +1,10 @@
-import {
-  combineReducers,
-  configureStore,
-  getDefaultMiddleware,
-} from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 const contador = () => 0;
 
-const middleware = [...getDefaultMiddleware()];
-const reducer = combineReducers({ contador });
-const store = configureStore({ reducer, middleware });
+const store = configureStore({
+  reducer: combineReducers(contador),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+});
 
 export default store;
