@@ -1,4 +1,4 @@
-import { PHOTOS_GET } from '../Api';
+import { PHOTO_GET } from '../Api';
 
 const FETCH_PHOTO_STARTED = 'photo/fetchStarted';
 const FETCH_PHOTO_SUCCESS = 'photo/fetchSuccess';
@@ -7,10 +7,12 @@ const FETCH_PHOTO_ERROR = 'photo/fetchError';
 const fetchPhotoStarted = () => ({
   type: FETCH_PHOTO_STARTED,
 });
+
 const fetchPhotoSuccess = (data) => ({
   type: FETCH_PHOTO_SUCCESS,
   payload: data,
 });
+
 const fetchPhotoError = (error) => ({
   type: FETCH_PHOTO_ERROR,
   payload: error,
@@ -49,15 +51,16 @@ export default function photo(state = initialState, action) {
       return state;
   }
 }
-export const fetchPhoto = (id) => async (dispath) => {
+
+export const fetchPhoto = (id) => async (dispatch) => {
   try {
-    dispath(fetchPhotoStarted());
-    const { url, options } = PHOTOS_GET(id);
-    const response = await fetch();
+    dispatch(fetchPhotoStarted());
+    const { url, options } = PHOTO_GET(id);
+    const response = await fetch(url, options);
     const data = await response.json();
     if (response.ok === false) throw new Error(data.message);
-    dispath(fetchPhotoSuccess(data));
+    dispatch(fetchPhotoSuccess(data));
   } catch (error) {
-    dispath(fetchPhotoError(error.message));
+    dispatch(fetchPhotoError(error.message));
   }
 };

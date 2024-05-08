@@ -1,7 +1,8 @@
+// importa o createSlice
 import { createSlice } from '@reduxjs/toolkit';
 
 /**
-
+ * Cria um slice com uma função assíncrona
  * @param {Object} config
  * @param {String} config.name
  * @param {Object} config.initialState
@@ -11,14 +12,12 @@ import { createSlice } from '@reduxjs/toolkit';
 const createAsyncSlice = (config) => {
   const slice = createSlice({
     name: config.name,
-
     initialState: {
       loading: false,
       data: null,
       error: null,
       ...config.initialState,
     },
-
     reducers: {
       fetchStarted(state) {
         state.loading = true;
@@ -33,13 +32,16 @@ const createAsyncSlice = (config) => {
         state.data = null;
         state.error = action.payload;
       },
-
+      resetState(state) {
+        state.loading = false;
+        state.data = null;
+        state.error = null;
+      },
       ...config.reducers,
     },
   });
 
   const { fetchStarted, fetchSuccess, fetchError } = slice.actions;
-
   const asyncAction = (payload) => async (dispatch) => {
     try {
       dispatch(fetchStarted());

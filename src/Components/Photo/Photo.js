@@ -4,13 +4,11 @@ import Error from '../Helper/Error';
 import Loading from '../Helper/Loading';
 import PhotoContent from './PhotoContent';
 import Head from '../Helper/Head';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchPhoto } from '../../store/photo';
 
 const Photo = () => {
   const { id } = useParams();
-
   const { loading, error, data } = useSelector((state) => state.photo);
   const dispatch = useDispatch();
 
